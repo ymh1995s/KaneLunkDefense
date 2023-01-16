@@ -9,6 +9,8 @@ public class Ally : MonoBehaviour
     public float curShotDelay;
     public ObjectManager objectManager;
     public GameManager gameManager;
+    public string bulletNo;
+    public int bulletspeed;
 
     public GameObject enemytest;
 
@@ -31,7 +33,7 @@ public class Ally : MonoBehaviour
         {
             return;
         }
-        //GameObject.Find("Level1");
+        //여기에 ally 레밸 별로 fire 다르게 나가는 로직 쳐 넣어야함
         bulletHead(objectManager.enemy1);
         bulletHead(objectManager.enemy2);
         bulletHead(objectManager.enemy3);
@@ -46,13 +48,13 @@ public class Ally : MonoBehaviour
             if (targetPos[i].activeSelf)
             {
 
-                GameObject bullet = objectManager.MakeObj("Bullet5");
+                GameObject bullet = objectManager.MakeObj(bulletNo);
                 bullet.transform.position = transform.position;
                 Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
 
                 Vector3 dirVec = (targetPos[i].transform.position) - (transform.position + Vector3.left * 0.3f); //목표물로 방향 = 목표물 위치 - 자신의 위치
 
-                rigid.AddForce(dirVec.normalized * 9, ForceMode2D.Impulse);
+                rigid.AddForce(dirVec.normalized * bulletspeed, ForceMode2D.Impulse);
 
                 curShotDelay = 0;
                 return;

@@ -30,13 +30,12 @@ public class ObjectManager : MonoBehaviour
     public GameObject[] enemy4;
     public GameObject[] enemy5;
 
-    GameObject[] bullet1;
-    GameObject[] bullet2;
-    GameObject[] bullet3;
-    GameObject[] bullet4;
-    GameObject[] bullet5;
+    public GameObject[] bullet1;
+    public GameObject[] bullet2;
+    public GameObject[] bullet3;
+    public GameObject[] bullet4;
+    public GameObject[] bullet5;
     
-
     GameObject[] targetPool;
 
 
@@ -49,11 +48,11 @@ public class ObjectManager : MonoBehaviour
         ally3 = new GameObject[100];
         ally4 = new GameObject[50];
         ally5 = new GameObject[10];
-        enemy1 = new GameObject[20];
-        enemy2 = new GameObject[20];
-        enemy3 = new GameObject[20];
-        enemy4 = new GameObject[20];
-        enemy5 = new GameObject[20];
+        enemy1 = new GameObject[50];
+        enemy2 = new GameObject[50];
+        enemy3 = new GameObject[50];
+        enemy4 = new GameObject[50];
+        enemy5 = new GameObject[50];
         bullet1 = new GameObject[1000];
         bullet2 = new GameObject[1000];
         bullet3 = new GameObject[1000];
@@ -155,7 +154,6 @@ public class ObjectManager : MonoBehaviour
 
     public GameObject MakeObj(string type)
     {
-        //print(type);
         switch (type)
         {
             case "Ally1":

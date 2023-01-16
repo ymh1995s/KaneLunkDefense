@@ -12,9 +12,11 @@ public class Enemy : MonoBehaviour
 
     Rigidbody2D rigid;
 
+    public GameManager gameManager;
 
     private void Awake()
     {
+
         rigid = GetComponent<Rigidbody2D>();
         rigid.velocity = Vector2.right * speed;
         
@@ -23,19 +25,21 @@ public class Enemy : MonoBehaviour
     {
         switch (enemyName)
         {
-            //case "A":
-            //    health = 10;
-            //    break;
-            //case "B":
-            //    health = 100;
-            //    break;
-            //case "S":
-            //    health = 1000;
-            //    break;
-            //case "C":
-            //    health = 10000;
-            //    Invoke("Stop", 2);
-            //    break;
+            case "A":
+                health = 10;
+                break;
+            case "B":
+                health = 100;
+                break;
+            case "C":
+                health = 650;
+                break;
+            case "D":
+                health = 2500;
+                break;
+            case "E":
+                health = 70000;
+                break;
         }
     }
 
@@ -44,6 +48,9 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.tag == "Border_DefenseLine")
         {
             transform.rotation = Quaternion.identity; //0도로 다시 돌림
+            gameManager.life -= 1;
+            gameManager.life_text.text = gameManager.life.ToString();
+            gameManager.EnemyCollsionSound();
             gameObject.SetActive(false);
         }
 
@@ -57,11 +64,15 @@ public class Enemy : MonoBehaviour
 
     public void OnHit(int dmg)
     {
+        //print(health);
         health -= dmg;
-        if (health <= 0)
+        if (health <= 0)//적 기체 피격
         {
             gameObject.SetActive(false);
+            gameManager.money += 2;
+            gameManager.money_text.text= gameManager.money.ToString();
             transform.rotation = Quaternion.identity;
+            gameManager.EnemyDeadSound();
         }
     }
 }
