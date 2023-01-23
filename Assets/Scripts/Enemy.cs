@@ -33,11 +33,11 @@ public class Enemy : MonoBehaviour
                 armor = 0;
                 break;
             case "B":
-                health = 250;
+                health = 230;
                 armor = 5;
                 break;
             case "C":
-                health = 800;
+                health = 750;
                 armor = 10;
                 break;
             case "D":

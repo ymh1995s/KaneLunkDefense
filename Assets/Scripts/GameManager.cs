@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public Bullet bullet;
 
     int[] AllySpec = new int[5] { 8, 11, 15, 20, 30 };
-    int[] EnemySpecHP = new int[5] {10,250,800,1800, 200000};
+    int[] EnemySpecHP = new int[5] {10,230,750,1800, 200000};
     int[] EnemySpecArmor = new int[5] { 0,5,10,20,30};
 
     public float curSpawnDelay;
@@ -211,7 +211,7 @@ public class GameManager : MonoBehaviour
 
         if (AllyLevel < 3600) {
             xpoint = Random.Range(450, 490);
-            maxShotDelay = Random.Range(850f, 1100f) / 1000f;
+            maxShotDelay = Random.Range(850f, 1150f) / 1000f;
             ally = objectManager.MakeObj("Ally1");
             allyLogic = ally.GetComponent<Ally>();
             allyLogic.bulletNo = "Bullet1";
@@ -222,7 +222,7 @@ public class GameManager : MonoBehaviour
         {
             xpoint = Random.Range(530, 570);
             ally = objectManager.MakeObj("Ally2");
-            maxShotDelay = Random.Range(650f, 800f) / 1000f;
+            maxShotDelay = Random.Range(650f, 850f) / 1000f;
             allyLogic = ally.GetComponent<Ally>();
             allyLogic.bulletNo = "Bullet2";
             allyLogic.bulletspeed = 12;
@@ -232,7 +232,7 @@ public class GameManager : MonoBehaviour
         {
             xpoint = Random.Range(610, 650);
             ally = objectManager.MakeObj("Ally3");
-            maxShotDelay = Random.Range(400f, 600f) / 1000f;
+            maxShotDelay = Random.Range(400f, 650f) / 1000f;
             allyLogic = ally.GetComponent<Ally>();
             allyLogic.bulletNo = "Bullet3";
             allyLogic.bulletspeed = 14;
@@ -250,7 +250,7 @@ public class GameManager : MonoBehaviour
         else if (AllyLevel < 10000) {
             xpoint = Random.Range(760, 780);
             ally = objectManager.MakeObj("Ally5");
-            maxShotDelay = Random.Range(50f, 90f) / 1000f;
+            maxShotDelay = Random.Range(50f, 100f) / 1000f;
             allyLogic = ally.GetComponent<Ally>();
             allyLogic.bulletNo = "Bullet5";
             allyLogic.bulletspeed = 20;
