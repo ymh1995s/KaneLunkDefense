@@ -100,6 +100,12 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         theAudio = GetComponent<AudioSource>();
+
+        Ally1Spec_text.text = "슈터 1 {공격력 : " + (AllySpec[0] + powerUp) + "}";
+        Ally2Spec_text.text = "슈터 2 {공격력 : " + (AllySpec[1] + powerUp) + "}";
+        Ally3Spec_text.text = "슈터 3 {공격력 : " + (AllySpec[2] + powerUp) + "}";
+        Ally4Spec_text.text = "슈터 4 {공격력 : " + (AllySpec[3] + powerUp) + "}";
+        Ally5Spec_text.text = "슈터 5 {공격력 : " + (AllySpec[4] + powerUp) + "}";
     }
 
     // Update is called once per frame
