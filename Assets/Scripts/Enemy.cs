@@ -7,12 +7,15 @@ public class Enemy : MonoBehaviour
     public string enemyName;
     public float speed;
     public int health;
-    
+    public int armor;
+
     public Sprite[] sprites;
 
     Rigidbody2D rigid;
 
     public GameManager gameManager;
+
+    int BossHP = 200000;
 
     private void Awake()
     {
@@ -27,18 +30,23 @@ public class Enemy : MonoBehaviour
         {
             case "A":
                 health = 10;
+                armor = 0;
                 break;
             case "B":
-                health = 100;
+                health = 250;
+                armor = 5;
                 break;
             case "C":
-                health = 650;
+                health = 700;
+                armor = 10;
                 break;
             case "D":
-                health = 2500;
+                health = 1800;
+                armor = 20;
                 break;
             case "E":
-                health = 70000;
+                health = 200000;
+                armor = 30;
                 break;
         }
     }
@@ -51,13 +59,18 @@ public class Enemy : MonoBehaviour
             gameManager.life -= 1;
             gameManager.life_text.text = gameManager.life.ToString();
             gameManager.EnemyCollsionSound();
+            gameManager.money += 20;
             gameObject.SetActive(false);
+            if(gameManager.life<=0|| enemyName=="E")
+            {
+                gameManager.OverGame();
+            }
         }
 
         else if (collision.gameObject.tag == "Bullet")
         {
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
-            OnHit(bullet.dmg);
+            OnHit(bullet.dmg + gameManager.powerUp);
             collision.gameObject.SetActive(false);
         }
     }
@@ -65,7 +78,16 @@ public class Enemy : MonoBehaviour
     public void OnHit(int dmg)
     {
         //print(health);
-        health -= dmg;
+        int trueDmg = dmg - armor;
+        if (trueDmg < 1) trueDmg = 1;
+        health -= trueDmg;
+
+        if(enemyName=="E")
+        {
+            BossHP -= trueDmg;
+            gameManager.BossHP_text.text = "유 썩 {체력 : " + BossHP + "}";
+        }
+
         if (health <= 0)//적 기체 피격
         {
             gameObject.SetActive(false);
@@ -73,6 +95,11 @@ public class Enemy : MonoBehaviour
             gameManager.money_text.text= gameManager.money.ToString();
             transform.rotation = Quaternion.identity;
             gameManager.EnemyDeadSound();
+
+            if(enemyName == "E")
+            {
+                gameManager.ClearGame();
+            }
         }
     }
 }

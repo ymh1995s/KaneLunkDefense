@@ -38,6 +38,9 @@ public class ObjectManager : MonoBehaviour
     
     GameObject[] targetPool;
 
+    [Header("오브젝트 풀의 위치")]
+    [SerializeField]
+    Transform tfPoolParent;
 
     public int level;
 
@@ -52,17 +55,17 @@ public class ObjectManager : MonoBehaviour
         enemy2 = new GameObject[50];
         enemy3 = new GameObject[50];
         enemy4 = new GameObject[50];
-        enemy5 = new GameObject[50];
-        bullet1 = new GameObject[1000];
-        bullet2 = new GameObject[1000];
-        bullet3 = new GameObject[1000];
-        bullet4 = new GameObject[1000];
-        bullet5 = new GameObject[1000];
+        enemy5 = new GameObject[3];
+        bullet1 = new GameObject[500];
+        bullet2 = new GameObject[500];
+        bullet3 = new GameObject[500];
+        bullet4 = new GameObject[500];
+        bullet5 = new GameObject[500];
 
         Generate();
     }
 
-    void Generate()
+    public void Generate()
     {
         for (int index = 0; index < ally1.Length; index++)
         {
@@ -128,26 +131,31 @@ public class ObjectManager : MonoBehaviour
         {
             bullet1[index] = Instantiate(Bullet1Prefab);
             bullet1[index].SetActive(false);
+            bullet1[index].transform.SetParent(tfPoolParent);
         }
         for (int index = 0; index < bullet2.Length; index++)
         {
             bullet2[index] = Instantiate(Bullet2Prefab);
             bullet2[index].SetActive(false);
+            bullet2[index].transform.SetParent(tfPoolParent);
         }
         for (int index = 0; index < bullet3.Length; index++)
         {
             bullet3[index] = Instantiate(Bullet3Prefab);
             bullet3[index].SetActive(false);
+            bullet3[index].transform.SetParent(tfPoolParent);
         }
         for (int index = 0; index < bullet4.Length; index++)
         {
             bullet4[index] = Instantiate(Bullet4Prefab);
             bullet4[index].SetActive(false);
+            bullet4[index].transform.SetParent(tfPoolParent);
         }
         for (int index = 0; index < bullet5.Length; index++)
         {
             bullet5[index] = Instantiate(Bullet5Prefab);
             bullet5[index].SetActive(false);
+            bullet5[index].transform.SetParent(tfPoolParent);
         }
     }
 
@@ -215,14 +223,4 @@ public class ObjectManager : MonoBehaviour
     }
 
 
-    //public GameObject[] GetPool(string type)
-    //{
-    //    switch (type)
-    //    {
-    //        case "Enem1L":
-    //            targetPool = enemy1;
-    //            break;
-    //    }
-    //    return targetPool;
-    //}
 }

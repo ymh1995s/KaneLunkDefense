@@ -6,17 +6,19 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject MainImage;
+    public GameObject ClearImage;
+    public GameObject OverImage;
 
     AudioSource theAudio;
-    AudioSource theAudio2;
 
     [SerializeField] AudioClip[] Audio_BGM;
+    [SerializeField] AudioClip[] Audio_PowerUPSound;
     [SerializeField] AudioClip[] Audio_DrawSound;
     [SerializeField] AudioClip[] Audio_EnemyDeadSound;
     [SerializeField] AudioClip Audio_EnemyCollisionSound;
-    /// <summary>
-    /// ///////////오디오 테스트
-    /// </summary>
+    [SerializeField] AudioClip Audio_GameOver;
+    [SerializeField] AudioClip Audio_GameClear;
 
     public GameObject[] enemyObjs;
     public Transform[] spawnPoints;
@@ -24,6 +26,9 @@ public class GameManager : MonoBehaviour
     public ObjectManager objectManager;
     public Bullet bullet;
 
+    int[] AllySpec = new int[5] { 8, 11, 15, 20, 30 };
+    int[] EnemySpecHP = new int[5] {10,250,700,1800, 200000};
+    int[] EnemySpecArmor = new int[5] { 0,5,10,20,30};
 
     public float curSpawnDelay;
     public float maxSpawnDelay;
@@ -33,56 +38,126 @@ public class GameManager : MonoBehaviour
 
     public Text money_text;
     public Text life_text;
+    public Text enemySpec_text;
+    public Text BossHP_text;
+    public Text Ally1Spec_text;
+    public Text Ally2Spec_text;
+    public Text Ally3Spec_text;
+    public Text Ally4Spec_text;
+    public Text Ally5Spec_text;
     public int money;
     public int life;
+    int PowerUpCost = 10;
 
-    public int round;
+    public int powerUp = 0;
 
-    private int preDrawSound = 0;
-
+    public int round=0;
+    
     bool isBossSpawn = false;
+    bool isBossClear = false;
+    bool isGameStart = false;
+    bool isGameClear = false;
+
+    public void PushStartButton()
+    {
+        MainImage.SetActive(false);
+
+        isGameStart = true;
+
+        time_start = Time.time;//쭈꾸다시용
+    }
+
+    public void PushStartEnd()
+    {
+        Application.Quit();
+    }
+
+    public void ClearGame()
+    {
+        for (int i = 0; i < objectManager.enemy1.Length; i++) objectManager.enemy1[i].SetActive(false);
+        for (int i = 0; i < objectManager.enemy2.Length; i++) objectManager.enemy2[i].SetActive(false);
+        for (int i = 0; i < objectManager.enemy3.Length; i++) objectManager.enemy3[i].SetActive(false);
+        for (int i = 0; i < objectManager.enemy4.Length; i++) objectManager.enemy4[i].SetActive(false);
+        for (int i = 0; i < objectManager.enemy5.Length; i++) objectManager.enemy5[i].SetActive(false);
+        AudioSource.PlayClipAtPoint(Audio_GameClear, transform.position, 1.0f); //1회성 효과음용,재생되면 알아서 삭제됨 메모리 이용 개꿀
+        isGameClear = true;
+        ClearImage.SetActive(true);
+    }
+
+    public void OverGame()
+    {
+        for (int i = 0; i < objectManager.enemy1.Length; i++) objectManager.enemy1[i].SetActive(false);
+        for (int i = 0; i < objectManager.enemy2.Length; i++) objectManager.enemy2[i].SetActive(false);
+        for (int i = 0; i < objectManager.enemy3.Length; i++) objectManager.enemy3[i].SetActive(false);
+        for (int i = 0; i < objectManager.enemy4.Length; i++) objectManager.enemy4[i].SetActive(false);
+        for (int i = 0; i < objectManager.enemy5.Length; i++) objectManager.enemy5[i].SetActive(false);
+        AudioSource.PlayClipAtPoint(Audio_GameOver, transform.position, 1.0f); //1회성 효과음용,재생되면 알아서 삭제됨 메모리 이용 개꿀
+        isGameClear = true;
+        OverImage.SetActive(true);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         theAudio = GetComponent<AudioSource>();
-        theAudio2 = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!theAudio.isPlaying)
+        if (!isGameStart)//뭉탱이 월드
         {
             theAudio.clip = Audio_BGM[0];
+        }
+        else
+        {
+           theAudio.clip = Audio_BGM[1];
+        }
+
+        if (!theAudio.isPlaying)
+        {
             theAudio.volume = 0.1f;
             theAudio.Play();
         }
 
-        Check_Timer();
+        if (!isGameStart) return;
 
-        curSpawnDelay += Time.deltaTime;
-
-        if (curSpawnDelay>maxSpawnDelay)
+        if (!isGameClear)
         {
-            SpawnEnemy();
-            
-            maxSpawnDelay = Random.Range(0.2f, 1f);
-            curSpawnDelay = 0;
+            Check_Timer();
+
+            curSpawnDelay += Time.deltaTime;
+
+            if (curSpawnDelay > maxSpawnDelay)
+            {
+                SpawnEnemy();
+
+                maxSpawnDelay = Random.Range(0.2f, 1f);
+                curSpawnDelay = 0;
+            }
         }
-        
     }
 
     public void DrawClickSound(int SoundNo)
     {
-        AudioSource.PlayClipAtPoint(Audio_DrawSound[SoundNo], transform.position,1.0f); //1회성 효과음용,재생되면 알아서 삭제됨 메모리 이용 개꿀
+        AudioSource.PlayClipAtPoint(Audio_DrawSound[SoundNo], transform.position, 1.0f); //1회성 효과음용,재생되면 알아서 삭제됨 메모리 이용 개꿀
     }
 
+    public void PowerUPClickSound()
+    {
+        int SoundNo = Random.Range(0, 4);
+        float soundVolumn = 1.0f;
+        if (SoundNo == 2) soundVolumn = 0.7f; //가람이 시계
+        AudioSource.PlayClipAtPoint(Audio_PowerUPSound[SoundNo], transform.position, soundVolumn); //1회성 효과음용,재생되면 알아서 삭제됨 메모리 이용 개꿀
+    }
 
     public void EnemyDeadSound()
     {
         int SoundNo = Random.Range(0, 5);
-        AudioSource.PlayClipAtPoint(Audio_EnemyDeadSound[SoundNo], transform.position, 0.1f); //1회성 효과음용,재생되면 알아서 삭제됨 메모리 이용 개꿀
+        float soundVolumn = 0.2f;
+        if (SoundNo == 4) soundVolumn = 0.1f; //아이고난5
+
+        AudioSource.PlayClipAtPoint(Audio_EnemyDeadSound[SoundNo], transform.position, soundVolumn); //1회성 효과음용,재생되면 알아서 삭제됨 메모리 이용 개꿀
     }
 
     public void EnemyCollsionSound()
@@ -124,7 +199,7 @@ public class GameManager : MonoBehaviour
         GameObject ally = null;
         int AllyLevel = Random.Range(0, 10000); //0~4
         
-        money -= 0;
+        money -= 10;
 
         Ally allyLogic = null; //일단 초기화맨
 
@@ -160,7 +235,7 @@ public class GameManager : MonoBehaviour
         else if (AllyLevel < 9930) {
             xpoint = Random.Range(700, 720);
             ally = objectManager.MakeObj("Ally4");
-            maxShotDelay = Random.Range(200f, 400f) / 1000f;
+            maxShotDelay = Random.Range(150f, 300f) / 1000f;
             allyLogic = ally.GetComponent<Ally>();
             allyLogic.bulletNo = "Bullet4";
             allyLogic.bulletspeed = 16;
@@ -191,6 +266,7 @@ public class GameManager : MonoBehaviour
             objectManager.level++;
             round++;
             time_start = Time.time;
+            enemySpec_text.text = (round+1)+"단계 {체력 : "+ EnemySpecHP[round]+ "} " + "{방어력 : "+ EnemySpecArmor[round] + "}";
         }
     }
 
@@ -206,17 +282,33 @@ public class GameManager : MonoBehaviour
 
     public void Retry()
     {
+        MainImage.SetActive(false);
+        OverImage.SetActive(false);
+        ClearImage.SetActive(false);
         SceneManager.LoadScene(0);
     }
 
     public void PowerUp()
     {
-        //bullet.dmg +=3;
-        //print(bullet.dmg);
+        if (money < PowerUpCost) return;
+        else
+        {
+            PowerUPClickSound();
+            money -= PowerUpCost;
+            PowerUpCost++;
+            money_text.text = money.ToString();
+            powerUp += 2;
+            Ally1Spec_text.text = "슈터 1 {공격력 : " + (AllySpec[0] + powerUp) + "}";
+            Ally2Spec_text.text = "슈터 2 {공격력 : " + (AllySpec[1] + powerUp) + "}";
+            Ally3Spec_text.text = "슈터 3 {공격력 : " + (AllySpec[2] + powerUp) + "}";
+            Ally4Spec_text.text = "슈터 4 {공격력 : " + (AllySpec[3] + powerUp) + "}";
+            Ally5Spec_text.text = "슈터 5 {공격력 : " + (AllySpec[4] + powerUp) + "}";
+        }        
     }
 
     public void SpawnLevel5()
     {
+        //ClearGame();
         float ypoint = Random.Range(-500, 0);
         float xpoint = 200; //= Random.Range(400, 800);
         float maxShotDelay = 0; //default1
