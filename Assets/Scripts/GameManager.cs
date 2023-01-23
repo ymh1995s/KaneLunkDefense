@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public Bullet bullet;
 
     int[] AllySpec = new int[5] { 8, 11, 15, 20, 30 };
-    int[] EnemySpecHP = new int[5] {10,230,750,1800, 200000};
+    int[] EnemySpecHP = new int[5] {10,250,750,1800, 200000};
     int[] EnemySpecArmor = new int[5] { 0,5,10,20,30};
 
     public float curSpawnDelay;
