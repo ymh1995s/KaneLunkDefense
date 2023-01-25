@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public Bullet bullet;
 
     int[] AllySpec =  new int[5] {8,11,15,20,30 };
-    int[] EnemySpecHP = new int[5] { 20, 350, 850, 1750, 200000 };
+    int[] EnemySpecHP = new int[5] { 20, 375, 900, 1800, 200000 };
     int[] EnemySpecArmor = new int[5] { 0, 5, 10, 20, 30 };
 
     public float curSpawnDelay;
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     public Text Ally5Spec_text;
     public int money;
     public int life;
-    int PowerUpCost = 10;
+    int PowerUpCost = 2;
 
     public int powerUp = 0;
 
@@ -245,7 +245,7 @@ public class GameManager : MonoBehaviour
         else if (AllyLevel < 9930) {
             xpoint = Random.Range(720, 740);
             ally = objectManager.MakeObj("Ally4");
-            maxShotDelay = Random.Range(150f, 275f) / 1000f;
+            maxShotDelay = Random.Range(125f, 250f) / 1000f;
             allyLogic = ally.GetComponent<Ally>();
             allyLogic.bulletNo = "Bullet4";
             allyLogic.bulletspeed = 18;
@@ -305,7 +305,7 @@ public class GameManager : MonoBehaviour
         {
             PowerUPClickSound();
             money -= PowerUpCost;
-            PowerUpCost++;
+            PowerUpCost+=2;
             money_text.text = money.ToString();
             powerUp += 2;
             PowerUpButtonText.text = "공업조이고["+ PowerUpCost+"]";

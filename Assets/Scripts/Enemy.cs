@@ -33,15 +33,15 @@ public class Enemy : MonoBehaviour
                 armor = 0;
                 break;
             case "B":
-                health =350;
+                health =375;
                 armor = 5;
                 break;
             case "C":
-                health =850;
+                health =900;
                 armor =10;
                 break;
             case "D":
-                health =1750;
+                health =1800;
                 armor =20;
                 break;
             case "E":
@@ -78,7 +78,7 @@ public class Enemy : MonoBehaviour
     public void OnHit(int dmg)
     {
         //print(dmg);
-        print(health);
+        //print(health);
         int trueDmg = dmg - armor;
         if (trueDmg < 1) trueDmg = 1;
         health -= trueDmg;
