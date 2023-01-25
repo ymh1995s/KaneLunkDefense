@@ -26,9 +26,9 @@ public class GameManager : MonoBehaviour
     public ObjectManager objectManager;
     public Bullet bullet;
 
-    int[] AllySpec = new int[5] { 8, 11, 15, 20, 30 };
-    int[] EnemySpecHP = new int[5] {10,250,750,1800, 200000};
-    int[] EnemySpecArmor = new int[5] { 0,5,10,20,30};
+    int[] AllySpec =  new int[5] {8,11,15,20,30 };
+    int[] EnemySpecHP = new int[5] { 20, 350, 850, 1750, 200000 };
+    int[] EnemySpecArmor = new int[5] { 0, 5, 10, 20, 30 };
 
     public float curSpawnDelay;
     public float maxSpawnDelay;
@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     private float time_start=0;
     private float time_current;
 
+    public Text PowerUpButtonText;
     public Text money_text;
     public Text life_text;
     public Text enemySpec_text;
@@ -114,10 +115,12 @@ public class GameManager : MonoBehaviour
         if (!isGameStart)//뭉탱이 월드
         {
             theAudio.clip = Audio_BGM[0];
+            theAudio.volume = 0.07f;
         }
         else
         {
            theAudio.clip = Audio_BGM[1];
+            theAudio.volume = 0.07f;
         }
 
         if (!theAudio.isPlaying)
@@ -146,14 +149,14 @@ public class GameManager : MonoBehaviour
 
     public void DrawClickSound(int SoundNo)
     {
-        AudioSource.PlayClipAtPoint(Audio_DrawSound[SoundNo], transform.position, 1.0f); //1회성 효과음용,재생되면 알아서 삭제됨 메모리 이용 개꿀
+        AudioSource.PlayClipAtPoint(Audio_DrawSound[SoundNo], transform.position, 11.0f); //1회성 효과음용,재생되면 알아서 삭제됨 메모리 이용 개꿀
     }
 
     public void PowerUPClickSound()
     {
         int SoundNo = Random.Range(0, 4);
         float soundVolumn = 1.0f;
-        if (SoundNo == 2) soundVolumn = 0.7f; //가람이 시계
+        if (SoundNo == 2) soundVolumn = 0.6f; //가람이 시계
         AudioSource.PlayClipAtPoint(Audio_PowerUPSound[SoundNo], transform.position, soundVolumn); //1회성 효과음용,재생되면 알아서 삭제됨 메모리 이용 개꿀
     }
 
@@ -185,6 +188,7 @@ public class GameManager : MonoBehaviour
             Rigidbody2D rigid = enemy.GetComponent<Rigidbody2D>();
             if (enemyround == "Enemy4")
             {
+                BossHP_text.gameObject.SetActive(true);
                 rigid.velocity = new Vector2(0.2f, 0);
                 isBossSpawn = true;
             }
@@ -211,7 +215,7 @@ public class GameManager : MonoBehaviour
 
         if (AllyLevel < 3600) {
             xpoint = Random.Range(450, 490);
-            maxShotDelay = Random.Range(850f, 1150f) / 1000f;
+            maxShotDelay = Random.Range(850f, 1100f) / 1000f;
             ally = objectManager.MakeObj("Ally1");
             allyLogic = ally.GetComponent<Ally>();
             allyLogic.bulletNo = "Bullet1";
@@ -222,7 +226,7 @@ public class GameManager : MonoBehaviour
         {
             xpoint = Random.Range(530, 570);
             ally = objectManager.MakeObj("Ally2");
-            maxShotDelay = Random.Range(650f, 850f) / 1000f;
+            maxShotDelay = Random.Range(650f, 800f) / 1000f;
             allyLogic = ally.GetComponent<Ally>();
             allyLogic.bulletNo = "Bullet2";
             allyLogic.bulletspeed = 12;
@@ -232,28 +236,28 @@ public class GameManager : MonoBehaviour
         {
             xpoint = Random.Range(610, 650);
             ally = objectManager.MakeObj("Ally3");
-            maxShotDelay = Random.Range(400f, 650f) / 1000f;
+            maxShotDelay = Random.Range(400f, 600f) / 1000f;
             allyLogic = ally.GetComponent<Ally>();
             allyLogic.bulletNo = "Bullet3";
             allyLogic.bulletspeed = 14;
             DrawClickSound(0);
         }
         else if (AllyLevel < 9930) {
-            xpoint = Random.Range(700, 720);
+            xpoint = Random.Range(720, 740);
             ally = objectManager.MakeObj("Ally4");
-            maxShotDelay = Random.Range(150f, 300f) / 1000f;
+            maxShotDelay = Random.Range(150f, 275f) / 1000f;
             allyLogic = ally.GetComponent<Ally>();
             allyLogic.bulletNo = "Bullet4";
-            allyLogic.bulletspeed = 16;
+            allyLogic.bulletspeed = 18;
             DrawClickSound(1);
         }
         else if (AllyLevel < 10000) {
-            xpoint = Random.Range(760, 780);
+            xpoint = Random.Range(800, 820);
             ally = objectManager.MakeObj("Ally5");
             maxShotDelay = Random.Range(50f, 100f) / 1000f;
             allyLogic = ally.GetComponent<Ally>();
             allyLogic.bulletNo = "Bullet5";
-            allyLogic.bulletspeed = 20;
+            allyLogic.bulletspeed = 22;
             DrawClickSound(2);
         }
 
@@ -304,6 +308,7 @@ public class GameManager : MonoBehaviour
             PowerUpCost++;
             money_text.text = money.ToString();
             powerUp += 2;
+            PowerUpButtonText.text = "공업조이고["+ PowerUpCost+"]";
             Ally1Spec_text.text = "슈터 1 {공격력 : " + (AllySpec[0] + powerUp) + "}";
             Ally2Spec_text.text = "슈터 2 {공격력 : " + (AllySpec[1] + powerUp) + "}";
             Ally3Spec_text.text = "슈터 3 {공격력 : " + (AllySpec[2] + powerUp) + "}";
@@ -326,12 +331,42 @@ public class GameManager : MonoBehaviour
 
         Ally allyLogic = null; //일단 초기화맨
 
-        xpoint = Random.Range(760, 780);
+        xpoint = Random.Range(800, 820);
         ally = objectManager.MakeObj("Ally5");
         maxShotDelay = Random.Range(50f, 100f) / 1000f;
         allyLogic = ally.GetComponent<Ally>();
         allyLogic.bulletNo = "Bullet5";
-        allyLogic.bulletspeed = 20;
+        allyLogic.bulletspeed = 22;
+        DrawClickSound(2);
+
+        allyLogic.maxShotDelay = maxShotDelay;
+        allyLogic.gameManager = this;
+        allyLogic.objectManager = objectManager;
+        ally.transform.position = new Vector3(xpoint / 100, ypoint / 100, 0);
+        SpawnLevel4();
+    }
+
+    public void SpawnLevel4()
+    {
+        //ClearGame();
+        float ypoint = Random.Range(-500, 0);
+        float xpoint = 200; //= Random.Range(400, 800);
+        float maxShotDelay = 0; //default1
+
+        GameObject ally = null;
+        int AllyLevel = Random.Range(0, 10000); //0~4
+
+        money -= 10;
+
+        Ally allyLogic = null; //일단 초기화맨
+
+        xpoint = Random.Range(720, 740);
+        ally = objectManager.MakeObj("Ally4");
+        maxShotDelay = Random.Range(150f, 250f) / 1000f;
+        allyLogic = ally.GetComponent<Ally>();
+        allyLogic.bulletNo = "Bullet4";
+        allyLogic.bulletspeed = 18;
+        DrawClickSound(1);
 
         allyLogic.maxShotDelay = maxShotDelay;
         allyLogic.gameManager = this;

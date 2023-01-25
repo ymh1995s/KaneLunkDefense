@@ -15,6 +15,8 @@ public class Ally : MonoBehaviour
 
     public GameObject enemytest;
 
+    bool isshoouting=false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,16 +32,21 @@ public class Ally : MonoBehaviour
 
     void Fire()
     {
+        isshoouting = false;
         if (curShotDelay < maxShotDelay)
         {
             return;
         }
-
-        bulletHead(objectManager.enemy1);
-        bulletHead(objectManager.enemy2);
-        bulletHead(objectManager.enemy3);
-        bulletHead(objectManager.enemy4);
-        bulletHead(objectManager.enemy5);
+        if (!isshoouting)
+            bulletHead(objectManager.enemy1);
+        if (!isshoouting)
+            bulletHead(objectManager.enemy2);
+        if (!isshoouting)
+            bulletHead(objectManager.enemy3);
+        if (!isshoouting)
+            bulletHead(objectManager.enemy4);
+        if (!isshoouting)
+            bulletHead(objectManager.enemy5);
     }
 
     void bulletHead(GameObject[] targetPos)
@@ -66,6 +73,7 @@ public class Ally : MonoBehaviour
         Vector3 dirVec = (targetPos[maxIndex].transform.position) - (transform.position + Vector3.left * 0.3f); //목표물로 방향 = 목표물 위치 - 자신의 위치
         rigid.AddForce(dirVec.normalized * bulletspeed, ForceMode2D.Impulse);
         curShotDelay = 0;
+        isshoouting = true;
     }
 
     void Reload()
