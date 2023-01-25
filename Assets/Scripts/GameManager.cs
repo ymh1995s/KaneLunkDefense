@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     public Text Ally5Spec_text;
     public int money;
     public int life;
-    int PowerUpCost = 2;
+    int PowerUpCost = 4;
 
     public int powerUp = 0;
 
@@ -213,8 +213,10 @@ public class GameManager : MonoBehaviour
 
         Ally allyLogic = null; //일단 초기화맨
 
-        if (AllyLevel < 3600) {
-            xpoint = Random.Range(450, 490);
+        if (AllyLevel < 3600)
+        //if (AllyLevel < 2000)
+        {
+                xpoint = Random.Range(450, 490);
             maxShotDelay = Random.Range(850f, 1100f) / 1000f;
             ally = objectManager.MakeObj("Ally1");
             allyLogic = ally.GetComponent<Ally>();
@@ -223,6 +225,7 @@ public class GameManager : MonoBehaviour
             DrawClickSound(0);
         }
         else if (AllyLevel < 8000)
+        //else if (AllyLevel < 6000)
         {
             xpoint = Random.Range(530, 570);
             ally = objectManager.MakeObj("Ally2");
@@ -233,6 +236,7 @@ public class GameManager : MonoBehaviour
             DrawClickSound(0);
         }
         else if (AllyLevel < 9700)
+        //else if (AllyLevel < 9300)
         {
             xpoint = Random.Range(610, 650);
             ally = objectManager.MakeObj("Ally3");
@@ -242,7 +246,9 @@ public class GameManager : MonoBehaviour
             allyLogic.bulletspeed = 14;
             DrawClickSound(0);
         }
-        else if (AllyLevel < 9930) {
+        else if (AllyLevel < 9930)
+        //else if (AllyLevel < 9800)
+        {
             xpoint = Random.Range(720, 740);
             ally = objectManager.MakeObj("Ally4");
             maxShotDelay = Random.Range(125f, 250f) / 1000f;
