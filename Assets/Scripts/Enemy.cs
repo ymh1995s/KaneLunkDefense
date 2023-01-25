@@ -29,20 +29,20 @@ public class Enemy : MonoBehaviour
         switch (enemyName)
         {
             case "A":
-                health = 10;
+                health = 20;
                 armor = 0;
                 break;
             case "B":
-                health = 250;
+                health =350;
                 armor = 5;
                 break;
             case "C":
-                health = 750;
-                armor = 10;
+                health =850;
+                armor =10;
                 break;
             case "D":
-                health = 1800;
-                armor = 20;
+                health =1750;
+                armor =20;
                 break;
             case "E":
                 health = 200000;
@@ -77,7 +77,8 @@ public class Enemy : MonoBehaviour
 
     public void OnHit(int dmg)
     {
-        //print(health);
+        //print(dmg);
+        print(health);
         int trueDmg = dmg - armor;
         if (trueDmg < 1) trueDmg = 1;
         health -= trueDmg;

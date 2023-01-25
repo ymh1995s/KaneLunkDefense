@@ -5,7 +5,6 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public int dmg;
-    public int[] dmgarr = new int[5] { 3,5,15,20,30};
     public int plusdmg=0;
     public string bulletName;
 
