@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
 {
+
+    [Header("프리펩")]
     public GameObject Ally1Prefab;
     public GameObject Ally2Prefab;
     public GameObject Ally3Prefab;
@@ -19,6 +21,9 @@ public class ObjectManager : MonoBehaviour
     public GameObject Bullet3Prefab;
     public GameObject Bullet4Prefab;
     public GameObject Bullet5Prefab;
+
+    [Header("오브젝트 풀")]
+    GameObject[] targetPool;
     public GameObject[] ally1;
     public GameObject[] ally2;
     public GameObject[] ally3;
@@ -29,20 +34,17 @@ public class ObjectManager : MonoBehaviour
     public GameObject[] enemy3;
     public GameObject[] enemy4;
     public GameObject[] enemy5;
-
     public GameObject[] bullet1;
     public GameObject[] bullet2;
     public GameObject[] bullet3;
     public GameObject[] bullet4;
-    public GameObject[] bullet5;
-    
-    GameObject[] targetPool;
+    public GameObject[] bullet5;    
 
     [Header("오브젝트 풀의 위치")]
     [SerializeField]
     Transform tfPoolParent;
 
-    public int level;
+    //public int level;
 
     private void Awake()
     {
@@ -219,6 +221,7 @@ public class ObjectManager : MonoBehaviour
                 return targetPool[index];
             }
         }
+
         return null;
     }
 

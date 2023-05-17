@@ -1,29 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public SpriteRenderer spriter;
+    Rigidbody2D rigid;
+
+    [Header("# Enemy Info")]
     public string enemyName;
     public float speed;
     public int health;
     public int armor;
+    public bool isAlive=true;
 
-    public Sprite[] sprites;
-
-    Rigidbody2D rigid;
-
-    public GameManager gameManager;
-
-    int BossHP = 200000;
+    private int BossHP = 200000;
 
     private void Awake()
     {
-
         rigid = GetComponent<Rigidbody2D>();
-        rigid.velocity = Vector2.right * speed;
-        
+        spriter = GetComponent<SpriteRenderer>();
     }
+
     private void OnEnable()
     {
         switch (enemyName)
@@ -55,30 +51,29 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Border_DefenseLine")
         {
+            isAlive = false;
+
             transform.rotation = Quaternion.identity; //0도로 다시 돌림
-            gameManager.life -= 1;
-            gameManager.life_text.text = gameManager.life.ToString();
-            gameManager.EnemyCollsionSound();
-            gameManager.money += 20;
+
+            GameManager.instance.life -= 1;
+            GameManager.instance.money += 20;
+            GameManager.instance.enemySFX.BorderHitSound();
+
             gameObject.SetActive(false);
-            if(gameManager.life<=0|| enemyName=="E")
-            {
-                gameManager.OverGame();
-            }
+
+            if (GameManager.instance.life<=0|| enemyName=="E")  GameManager.instance.OverGame();
         }
 
         else if (collision.gameObject.tag == "Bullet")
         {
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
-            OnHit(bullet.dmg + gameManager.powerUp);
+            OnHit(bullet.dmg + GameManager.instance.powerUp);
             collision.gameObject.SetActive(false);
         }
     }
 
     public void OnHit(int dmg)
     {
-        //print(dmg);
-        //print(health);
         int trueDmg = dmg - armor;
         if (trueDmg < 1) trueDmg = 1;
         health -= trueDmg;
@@ -86,20 +81,24 @@ public class Enemy : MonoBehaviour
         if(enemyName=="E")
         {
             BossHP -= trueDmg;
-            gameManager.BossHP_text.text = "유 썩 {체력 : " + BossHP + "}";
+            GameManager.instance.inGameUI.texts[12].text = "유 썩 {체력 : " + BossHP + "}";
         }
 
         if (health <= 0)//적 기체 피격
         {
-            gameObject.SetActive(false);
-            gameManager.money += 2;
-            gameManager.money_text.text= gameManager.money.ToString();
-            transform.rotation = Quaternion.identity;
-            gameManager.EnemyDeadSound();
+            if (!isAlive) return;
 
-            if(enemyName == "E")
+            isAlive = false;
+
+            GameManager.instance.money += 2;
+            GameManager.instance.enemySFX.DeadSound();
+
+            transform.rotation = Quaternion.identity;
+            gameObject.SetActive(false);
+
+            if (enemyName == "E")
             {
-                gameManager.ClearGame();
+                GameManager.instance.ClearGame();
             }
         }
     }
