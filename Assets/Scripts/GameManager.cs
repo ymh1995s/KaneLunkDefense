@@ -10,6 +10,15 @@ public class GameManager : MonoBehaviour
     public ObjectManager objectManager;
     public Spawn spawner;
     public EnemySFX enemySFX;
+    
+    [Header("# 아군/적군 스펙")]
+    //실제론 인스펙터에서 참조
+    public int[] AllySpec = new int[6] { 9999, 9999, 9999, 9999, 9999, 9999 };
+    public float[] EnemySpecHP = new float[8] { 9999f, 9999f, 9999f, 9999f, 9999f, 9999f, 9999f, 9999f };
+    public int[] EnemySpecArmor = new int[8] { 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999 };
+    
+    [Header("# BG")]
+    public GameObject Phase2;
 
     [Header("# Player")]
     public int money;
@@ -40,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     [Header("# 이하 Private")]
     int round=0;
+    bool isPhase2 = false;
 
     float curSpawnDelay;
     float maxSpawnDelay;
@@ -61,7 +71,8 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (!isGameStart) theAudio.clip = Audio_BGM[0]; //뭉탱이 월드
-        else theAudio.clip = Audio_BGM[1]; //뭉탱이 서바이버
+        else if (!isPhase2) theAudio.clip = Audio_BGM[1]; //뭉탱이 서바이버
+        else theAudio.clip = Audio_BGM[2]; //spin
 
         if (!theAudio.isPlaying)
         {
@@ -84,6 +95,8 @@ public class GameManager : MonoBehaviour
                 maxSpawnDelay = Random.Range(0.2f, 1f);
                 curSpawnDelay = 0;
             }
+            //if (round > 4) Phase2.SetActive(true);
+            if (round > 4) isPhase2 = true;
         }
     }
 
@@ -99,10 +112,10 @@ public class GameManager : MonoBehaviour
 
     private void Check_Timer()
     {
-        time_current = Time.time- time_start;
-        if (time_current > 5)
-        {
-            //objectManager.level++;
+        time_current = Time.time - time_start;
+        if (time_current > 60)
+            //if (time_current > 60)
+            {
             round++;
             time_start = Time.time;
             inGameUI.enemyLevelUp(round);
@@ -129,5 +142,38 @@ public class GameManager : MonoBehaviour
         allyLogic.maxShotDelay = maxShotDelay;
         allyLogic.objectManager = GameManager.instance.objectManager;
         ally.transform.position = new Vector3(xpoint / 100, ypoint / 100, 0);
+    }
+
+
+    public void DebugBtn6()
+    {
+        float ypoint = Random.Range(60, 100);
+        float xpoint = 200; //= Random.Range(400, 800);
+        float maxShotDelay = 0; //default1
+
+        GameObject ally = null;
+
+        Ally allyLogic = null; //일단 초기화맨
+
+        xpoint = Random.Range(800, 820);
+        ally = GameManager.instance.objectManager.MakeObj("Ally6");
+        maxShotDelay = Random.Range(200, 250) / 1000f;
+        allyLogic = ally.GetComponent<Ally>();
+        allyLogic.bulletNo = "Bullet6";
+        allyLogic.bulletspeed = 12;
+
+        allyLogic.maxShotDelay = maxShotDelay;
+        allyLogic.objectManager = GameManager.instance.objectManager;
+        ally.transform.position = new Vector3(xpoint / 100, ypoint / 100, 0);
+    }
+
+
+    public void DebugBtnTimePlus()
+    {
+        Time.timeScale += 0.5f;
+    }
+    public void DebugBtnTimeMinus()
+    {
+        Time.timeScale -= 0.5f;
     }
 }

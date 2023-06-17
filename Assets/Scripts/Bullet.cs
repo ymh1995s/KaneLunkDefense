@@ -13,19 +13,22 @@ public class Bullet : MonoBehaviour
         switch (bulletName)
         {
             case "A":
-                dmg = 8;
+                dmg = GameManager.instance.AllySpec[0];
                 break;
             case "B":
-                dmg = 11;
+                dmg = GameManager.instance.AllySpec[1];
                 break;
             case "C":
-                dmg = 15;
+                dmg = GameManager.instance.AllySpec[2];
                 break;
             case "D":
-                dmg = 20;
+                dmg = GameManager.instance.AllySpec[3];
                 break;
             case "E":
-                dmg = 30;
+                dmg = GameManager.instance.AllySpec[4];
+                break;
+            case "F":
+                dmg = GameManager.instance.AllySpec[5];
                 break;
         }
     }

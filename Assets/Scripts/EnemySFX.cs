@@ -19,12 +19,11 @@ public class EnemySFX : MonoBehaviour
         int SoundNo = Random.Range(0, 5);
         float soundVolumn = 0.16f;
         if (SoundNo == 4) soundVolumn = 0.12f; //아이고난5
-        print(SoundNo);
         theAudio.PlayOneShot(Audio_EnemyDeadSound[SoundNo], soundVolumn);
     }
 
     public void BorderHitSound()
     {
-        theAudio.PlayOneShot(Audio_EnemyCollisionSound, 0.3f);
+        theAudio.PlayOneShot(Audio_EnemyCollisionSound, 0.25f);
     }
 }

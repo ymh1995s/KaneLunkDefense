@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -8,16 +9,18 @@ public class Enemy : MonoBehaviour
     [Header("# Enemy Info")]
     public string enemyName;
     public float speed;
-    public int health;
+    public float health;
     public int armor;
     public bool isAlive=true;
 
-    private int BossHP = 200000;
+    string BossAHP;
+    string BossBHP;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        spriter = GetComponent<SpriteRenderer>();
+        BossAHP = Convert.ToString(GameManager.instance.EnemySpecHP[4]);
+        BossBHP = Convert.ToString(GameManager.instance.EnemySpecHP[7]);
     }
 
     private void OnEnable()
@@ -25,24 +28,36 @@ public class Enemy : MonoBehaviour
         switch (enemyName)
         {
             case "A":
-                health = 20;
-                armor = 0;
+                health = GameManager.instance.EnemySpecHP[0];
+                armor = GameManager.instance.EnemySpecArmor[0];
                 break;
             case "B":
-                health =375;
-                armor = 5;
+                health = GameManager.instance.EnemySpecHP[1];
+                armor = GameManager.instance.EnemySpecArmor[1];
                 break;
             case "C":
-                health =900;
-                armor =10;
+                health = GameManager.instance.EnemySpecHP[2];
+                armor = GameManager.instance.EnemySpecArmor[2];
                 break;
             case "D":
-                health =1800;
-                armor =20;
+                health = GameManager.instance.EnemySpecHP[3];
+                armor = GameManager.instance.EnemySpecArmor[3];
                 break;
             case "E":
-                health = 200000;
-                armor = 30;
+                health = GameManager.instance.EnemySpecHP[4];
+                armor = GameManager.instance.EnemySpecArmor[4];
+                break;
+            case "F":
+                health = GameManager.instance.EnemySpecHP[5];
+                armor = GameManager.instance.EnemySpecArmor[5];
+                break;
+            case "G":
+                health = GameManager.instance.EnemySpecHP[6];
+                armor = GameManager.instance.EnemySpecArmor[6];
+                break;
+            case "H":
+                health = GameManager.instance.EnemySpecHP[7];
+                armor = GameManager.instance.EnemySpecArmor[7];
                 break;
         }
     }
@@ -61,7 +76,7 @@ public class Enemy : MonoBehaviour
 
             gameObject.SetActive(false);
 
-            if (GameManager.instance.life<=0|| enemyName=="E")  GameManager.instance.OverGame();
+            if (GameManager.instance.life <= 0 || enemyName == "E" || enemyName == "H") GameManager.instance.OverGame();
         }
 
         else if (collision.gameObject.tag == "Bullet")
@@ -77,16 +92,20 @@ public class Enemy : MonoBehaviour
         int trueDmg = dmg - armor;
         if (trueDmg < 1) trueDmg = 1;
         health -= trueDmg;
-
-        if(enemyName=="E")
+        if (enemyName == "E")
         {
-            BossHP -= trueDmg;
-            GameManager.instance.inGameUI.texts[12].text = "유 썩 {체력 : " + BossHP + "}";
+            GameManager.instance.inGameUI.BOSSHP_Text.text = "유 썩 " + Convert.ToString(health);
+            GameManager.instance.inGameUI.BOSSHP_Image.fillAmount = health / GameManager.instance.EnemySpecHP[4];
+        }
+        if (enemyName == "H")
+        {
+            GameManager.instance.inGameUI.BOSSHP_Text.text = "타지리 " + Convert.ToString(health);
+            GameManager.instance.inGameUI.BOSSHP_Image.fillAmount = health / GameManager.instance.EnemySpecHP[7];
         }
 
         if (health <= 0)//적 기체 피격
         {
-            if (!isAlive) return;
+            if (!isAlive) return; //돈 중복 수혜 방지
 
             isAlive = false;
 
@@ -98,8 +117,16 @@ public class Enemy : MonoBehaviour
 
             if (enemyName == "E")
             {
-                GameManager.instance.ClearGame();
+                GameManager.instance.money += 98;
+                GameManager.instance.time_start = 0;
+                GameManager.instance.spawner.isLade = false;
+                GameManager.instance.inGameUI.BoSSInfo.SetActive(false);
+                GameManager.instance.inGameUI.BOSSHP_Text.text = "타지리 400000";
+                GameManager.instance.inGameUI.BOSSHP_Image.fillAmount = 1;
             }
+            else if (enemyName == "F") GameManager.instance.money += 2;
+            else if (enemyName == "G") GameManager.instance.money += 2;
+            else if (enemyName == "H") GameManager.instance.ClearGame();
         }
     }
 }
