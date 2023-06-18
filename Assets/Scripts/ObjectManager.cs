@@ -58,10 +58,10 @@ public class ObjectManager : MonoBehaviour
 
     private void Awake()
     {
-        ally1 = new GameObject[200];
-        ally2 = new GameObject[200];
-        ally3 = new GameObject[100];
-        ally4 = new GameObject[30];
+        ally1 = new GameObject[100];
+        ally2 = new GameObject[100];
+        ally3 = new GameObject[50];
+        ally4 = new GameObject[20];
         ally5 = new GameObject[10];
         ally6 = new GameObject[5];
         enemy1 = new GameObject[25];

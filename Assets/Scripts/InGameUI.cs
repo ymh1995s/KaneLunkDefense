@@ -98,7 +98,8 @@ public class InGameUI : MonoBehaviour
         float maxShotDelay = 0; //default1
 
         GameObject ally = null;
-        int AllyLevel = Random.Range(0, 10000); //0~4
+        int AllyLevel = Random.Range(0, 10000); //0~9999
+        if( AllyLevel>9500) print(AllyLevel);
 
         GameManager.instance.money -= 10;
 
@@ -165,7 +166,7 @@ public class InGameUI : MonoBehaviour
             ypoint = Random.Range(50, 80);
             xpoint = Random.Range(500,800);
             ally = GameManager.instance.objectManager.MakeObj("Ally6");
-            maxShotDelay = Random.Range(200, 250) / 1000f;
+            maxShotDelay = Random.Range(125, 180) / 1000f;
             allyLogic = ally.GetComponent<Ally>();
             allyLogic.bulletNo = "Bullet6";
             allyLogic.bulletspeed = 12;

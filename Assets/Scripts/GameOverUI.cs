@@ -26,6 +26,9 @@ public class GameOverUI : MonoBehaviour
         for (int i = 0; i < GameManager.instance.objectManager.enemy3.Length; i++) GameManager.instance.objectManager.enemy3[i].SetActive(false);
         for (int i = 0; i < GameManager.instance.objectManager.enemy4.Length; i++) GameManager.instance.objectManager.enemy4[i].SetActive(false);
         for (int i = 0; i < GameManager.instance.objectManager.enemy5.Length; i++) GameManager.instance.objectManager.enemy5[i].SetActive(false);
+        for (int i = 0; i < GameManager.instance.objectManager.enemy5.Length; i++) GameManager.instance.objectManager.enemy6[i].SetActive(false);
+        for (int i = 0; i < GameManager.instance.objectManager.enemy5.Length; i++) GameManager.instance.objectManager.enemy7[i].SetActive(false);
+        for (int i = 0; i < GameManager.instance.objectManager.enemy5.Length; i++) GameManager.instance.objectManager.enemy8[i].SetActive(false);
         theAudio.PlayOneShot(Audio_GameOver, 0.5f);
         GameManager.instance.isGameClear = true;
     }

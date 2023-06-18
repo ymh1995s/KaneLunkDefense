@@ -117,7 +117,7 @@ public class Enemy : MonoBehaviour
 
             if (enemyName == "E")
             {
-                GameManager.instance.money += 98;
+                GameManager.instance.money += 198;
                 GameManager.instance.time_start = 0;
                 GameManager.instance.spawner.isLade = false;
                 GameManager.instance.inGameUI.BoSSInfo.SetActive(false);
