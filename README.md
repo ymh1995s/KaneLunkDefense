@@ -10,21 +10,18 @@
   5. [[ObjectManager.cs]](https://github.com/ymh1995s/KaneLunkDefense/blob/master/Assets/Scripts/ObjectManager.cs) 오브젝트 풀링 관련 스크립트
 
 ## 개요
-스트리머 방송 컨텐츠를 타겟으로 한 2D 디펜스게임 제작
+스트리머 밈을 주제로 한 디펜스 게임 제작
 
-## 기간
-2023.01 (1개월)
+## 개발 기간
+2022.12 ~ 2023.01 (2개월) / 1인 개발
 
 ## 사용 기술
 1. C#
 2. Unity
 
-## 역할
-1인 개발
-
 ## 결과
-1. 게임 시작 화면 → 인게임 화면 → 게임 오버 화면에 걸쳐 전반적 게임 로직 구현
-2. 오브젝트 풀링을 사용한 유닛과 총알의 메모리 관리
-3. HUD와 게임 화면 분리 관리
-4. 해당 컨텐츠 유튜브 업로드 (조회수 9만 이상)
-5. 구글 스토어 출시 (사용자 200명 이상)
+유튜브 (조회수 11만+)
+[[케인] 팬메이드 케인 운빨 디펜스](https://www.youtube.com/watch?v=HcRBVWXPEUM&t=565s)
+
+구글스토어 등록(다운로드 수 500+)
+[케운디 : 케인 운빨 디펜스 - Google Play 앱](https://play.google.com/store/apps/details?id=com.DonTongDan.KaneLuckDefense&hl=ko-KR)
