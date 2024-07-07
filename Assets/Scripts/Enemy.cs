@@ -117,12 +117,12 @@ public class Enemy : MonoBehaviour
 
             if (enemyName == "E")
             {
+                GameManager.instance.inGameUI.BOSSHP_Text.text = "타지리 400000";
+                GameManager.instance.inGameUI.BOSSHP_Image.fillAmount = 1;
                 GameManager.instance.money += 198;
                 GameManager.instance.time_start = 0;
                 GameManager.instance.spawner.isLade = false;
                 GameManager.instance.inGameUI.BoSSInfo.SetActive(false);
-                GameManager.instance.inGameUI.BOSSHP_Text.text = "타지리 400000";
-                GameManager.instance.inGameUI.BOSSHP_Image.fillAmount = 1;
             }
             else if (enemyName == "F") GameManager.instance.money += 2;
             else if (enemyName == "G") GameManager.instance.money += 2;
