@@ -2,12 +2,7 @@
 케운디
 
 핵심 코드는 [[KaneLunkDefense/Assets/]](https://github.com/ymh1995s/KaneLunkDefense/tree/master/Assets/Scripts)에서 확인할 수 있습니다.
-
-  1. [[Ally.cs]](https://github.com/ymh1995s/KaneLunkDefense/blob/master/Assets/Scripts/Ally.cs) 아군 타워 관련 스크립트
-  2. [[Bullet.cs]](https://github.com/ymh1995s/KaneLunkDefense/blob/master/Assets/Scripts/Bullet.cs) 아군 타워가 발사한 총알 관련 스크립트
-  3. [[Enemy.cs]](https://github.com/ymh1995s/KaneLunkDefense/blob/master/Assets/Scripts/Enemy.cs) 적 생성 및 이동 관련 스크립트
-  4. [[GameManager.cs]](https://github.com/ymh1995s/KaneLunkDefense/blob/master/Assets/Scripts/GameManager.cs) 게임 로직 총괄 스크립트
-  5. [[ObjectManager.cs]](https://github.com/ymh1995s/KaneLunkDefense/blob/master/Assets/Scripts/ObjectManager.cs) 오브젝트 풀링 관련 스크립트
+데모 프로그램은 [[DEMO 폴더]](https://github.com/ymh1995s/KaneLunkDefense/tree/master/DEMO)에서 확인할 수 있습니다.
 
 ## 개요
 스트리머 밈을 주제로 한 디펜스 게임 제작
