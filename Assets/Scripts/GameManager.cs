@@ -36,9 +36,10 @@ public class GameManager : MonoBehaviour
     public AudioClip[] Audio_BGM;
     
     [Header("# 게임 진행 로직 관련")]
-    public float time_start;
+    public float time_start; 
     public float time_current;
-    public bool isGameStart = false;
+    //public bool isGameStart = false; //데모버전을 위한 주석
+    public bool isGameStart = true;
     public bool isGameClear = false;
 
     [Header("# Spawn Point 묶음")]
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        /* 데모버전을 위한 주석
         if (!isGameStart) theAudio.clip = Audio_BGM[0]; //뭉탱이 월드
         else if (!isPhase2) theAudio.clip = Audio_BGM[1]; //뭉탱이 서바이버
         else theAudio.clip = Audio_BGM[2]; //spin
@@ -81,6 +83,7 @@ public class GameManager : MonoBehaviour
         }
 
         if (!isGameStart) return;
+        */
 
         if (!isGameClear)
         {
@@ -114,8 +117,7 @@ public class GameManager : MonoBehaviour
     {
         time_current = Time.time - time_start;
         if (time_current > 60)
-            //if (time_current > 60)
-            {
+        {
             round++;
             time_start = Time.time;
             inGameUI.enemyLevelUp(round);
@@ -130,7 +132,7 @@ public class GameManager : MonoBehaviour
 
         GameObject ally = null;
 
-        Ally allyLogic = null; //일단 초기화맨
+        Ally allyLogic = null;
 
         xpoint = Random.Range(800, 820);
         ally = GameManager.instance.objectManager.MakeObj("Ally5");
@@ -153,7 +155,7 @@ public class GameManager : MonoBehaviour
 
         GameObject ally = null;
 
-        Ally allyLogic = null; //일단 초기화맨
+        Ally allyLogic = null;
 
         xpoint = Random.Range(800, 820);
         ally = GameManager.instance.objectManager.MakeObj("Ally6");

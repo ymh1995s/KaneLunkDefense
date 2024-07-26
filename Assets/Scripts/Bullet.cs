@@ -33,7 +33,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision) //충돌 발생 이벤트인듯?
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Border_BulletDeleteLine")
         {

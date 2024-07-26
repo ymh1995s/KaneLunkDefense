@@ -22,10 +22,10 @@ public class InGameUI : MonoBehaviour
         theAudio = GetComponent<AudioSource>();
 
         texts = GetComponentsInChildren<Text>(true); //트루까지 넣어야 인액티브(보스체력) 까지 찾아냄
-        texts[0].text = "뽑기 조이고[10]";          //뽑기
-        texts[1].text = "공업 조이고[4]";           //파워업
-        texts[2].text = "쭈꾸다시"; //재시작 버튼
-        texts[3].text = "목슘"; //목숨(더미)
+        texts[0].text = "뽑기[10]";          //뽑기
+        texts[1].text = "공업[4]";           //파워업
+        texts[2].text = "ReGame"; //재시작 버튼
+        texts[3].text = "목숨"; //목숨(더미)
         texts[4].text = "20"; //돈(실제)
         texts[9].text = "8\n11\n15\n20\n30\n32"; //딜
         texts[10].text = "36%\n44%\n17%\n2.3%\n0.65%\n0.05%"; // 확률
@@ -63,7 +63,7 @@ public class InGameUI : MonoBehaviour
             GameManager.instance.PowerUpCost += 2;
             GameManager.instance.powerUp += 2;
             texts[4].text = GameManager.instance.money.ToString(); //돈
-            texts[1].text = "공업 조이고[" + GameManager.instance.PowerUpCost + "]";
+            texts[1].text = "공업[" + GameManager.instance.PowerUpCost + "]";
             texts[9].text = (GameManager.instance.AllySpec[0] + GameManager.instance.powerUp) + "\n" +
                 (GameManager.instance.AllySpec[1] + GameManager.instance.powerUp) + "\n" +
                 (GameManager.instance.AllySpec[2] + GameManager.instance.powerUp) + "\n" +
@@ -88,8 +88,6 @@ public class InGameUI : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-
-    //얘가 왜 여깄음?
     void SpawnAlly()
     {
 
@@ -103,10 +101,9 @@ public class InGameUI : MonoBehaviour
 
         GameManager.instance.money -= 10;
 
-        Ally allyLogic = null; //일단 초기화맨
+        Ally allyLogic = null; //일단 초기화
 
         if (AllyLevel < 3600)
-        //if (AllyLevel < 3600)
         {
             xpoint = Random.Range(450, 490);
             maxShotDelay = Random.Range(800f, 900f) / 1000f;
@@ -117,7 +114,6 @@ public class InGameUI : MonoBehaviour
             DrawClickSound(0);
         }
         else if (AllyLevel < 8000)
-        //else if (AllyLevel < 8000)
         {
             xpoint = Random.Range(530, 570);
             ally = GameManager.instance.objectManager.MakeObj("Ally2");
@@ -128,7 +124,6 @@ public class InGameUI : MonoBehaviour
             DrawClickSound(0);
         }
         else if (AllyLevel < 9700)
-        //else if (AllyLevel < 9700)
         {
             xpoint = Random.Range(610, 650);
             ally = GameManager.instance.objectManager.MakeObj("Ally3");
@@ -139,7 +134,6 @@ public class InGameUI : MonoBehaviour
             DrawClickSound(0);
         }
         else if (AllyLevel < 9930)
-        //else if (AllyLevel < 9900)
         {
             xpoint = Random.Range(720, 740);
             ally = GameManager.instance.objectManager.MakeObj("Ally4");
@@ -150,7 +144,6 @@ public class InGameUI : MonoBehaviour
             DrawClickSound(1);
         }
         else if (AllyLevel < 9995)
-        //else if (AllyLevel < 9995)
         {
             xpoint = Random.Range(800, 820);
             ally = GameManager.instance.objectManager.MakeObj("Ally5");
@@ -181,19 +174,20 @@ public class InGameUI : MonoBehaviour
 
     public void DrawClickSound(int SoundNo)
     {
+        /* 데모버전을 위한 주석
         float soundVolumn = 1.0f;
         if (SoundNo != 0) soundVolumn = 0.5f; //뽈롱만 키우고 나머지는 작게
         theAudio.PlayOneShot(Audio_DrawSound[SoundNo], soundVolumn);
-        //AudioSource.PlayClipAtPoint(Audio_DrawSound[SoundNo], transform.position,100); //1회성 효과음용,재생되면 알아서 삭제됨 메모리 이용 개꿀
+        */
     }
 
     public void PowerUPClickSound()
     {
+        /* 데모버전을 위한 주석
         int SoundNo = Random.Range(0, 4);
         float soundVolumn = 0.5f;
         if (SoundNo == 0) soundVolumn = 0.25f; //가람이 시계
         theAudio.PlayOneShot(Audio_PowerUPSound[SoundNo], soundVolumn);
-        //AudioSource.PlayClipAtPoint(Audio_PowerUPSound[SoundNo], transform.position, soundVolumn); //1회성 효과음용,재생되면 알아서 삭제됨 메모리 이용 개꿀
+        */
     }
-
 }
