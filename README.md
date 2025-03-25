@@ -2,7 +2,7 @@
 
 핵심 코드는 [[KaneLunkDefense/Assets/]](https://github.com/ymh1995s/KaneLunkDefense/tree/master/Assets/Scripts)에서 확인할 수 있습니다.
 
-데모 프로그램은 [[DEMO 폴더]](https://github.com/ymh1995s/KaneLunkDefense/tree/master/DEMO)에서 확인할 수 있습니다.
+데모 프로그램은 [[구글 드라이브]](https://drive.google.com/drive/folders/1VIDNcrcFxEUH3_VSyle5iL1FGTmox1AT?usp=sharing)에서 확인할 수 있습니다.
 
 ## 개요
 스트리머 밈을 주제로 한 디펜스 게임 제작
